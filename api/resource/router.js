@@ -17,8 +17,8 @@ router.get('/', async (req,res, next) => {
 router.post('/', async (req, res, next) => {
     const resourceData = req.body;
     try {
-        const added = await Resource.add(resourceData)
-        res.json(added)
+        await Resource.add(resourceData)
+        res.status(201).json(resourceData)
     } catch(err) {
         next(err)
     }
