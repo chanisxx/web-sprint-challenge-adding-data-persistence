@@ -18,7 +18,7 @@ router.post('/', async (req, res, next) => {
     const taskData = req.body;
     try {
         await Task.add(taskData)
-        res.status(201).json(taskData)
+        res.status(201).json({...taskData, project_completed: false})
     } catch(err) {
         next(err)
     }
