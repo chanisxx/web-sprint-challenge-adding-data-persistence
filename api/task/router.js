@@ -8,7 +8,8 @@ const router = express.Router();
 router.get('/', async (req,res, next) => {
     try {
         const tasks = await Task.find()
-        res.json(tasks)
+        const mutatedTasks = tasks.map(task => {return {...task, task_completed: task.task_completed ? true : false}})
+        res.status(200).json(mutatedTasks)
     } catch(err) {
         next(err)
     }
@@ -17,8 +18,8 @@ router.get('/', async (req,res, next) => {
 router.post('/', async (req, res, next) => {
     const taskData = req.body;
     try {
-        await Task.add(taskData)
-        res.status(201).json({...taskData, project_completed: false})
+        const addedTask = await Task.add(taskData)
+        res.status(201).json({...addedTask, task_completed: addedTask.task_completed ? true : false })
     } catch(err) {
         next(err)
     }
