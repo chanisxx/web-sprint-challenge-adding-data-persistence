@@ -7,8 +7,14 @@ module.exports = {
     findById
 }
 
+// function find() {
+//     return db('tasks')
+// }
+
 function find() {
-    return db('tasks')
+    return db('projects')
+    .join('tasks', 'projects.project_id', 'tasks.project_id')
+    .select('projects.project_description', 'projects.project_name')
 }
 
 function findById(id) {
