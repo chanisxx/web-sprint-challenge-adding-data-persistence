@@ -12,9 +12,15 @@ module.exports = {
 // }
 
 function find() {
-    return db('projects')
-    .join('tasks', 'projects.project_id', 'tasks.project_id')
-    .select('projects.project_description', 'projects.project_name')
+    return db('tasks as t')
+    .join('projects as p', 'p.project_id', 't.project_id')
+    .select(
+        't.task_completed', 
+        't.task_description',
+        't.task_notes',
+        'p.project_description', 
+        'p.project_name'
+    )
 }
 
 function findById(id) {
